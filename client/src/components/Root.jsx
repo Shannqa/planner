@@ -63,7 +63,7 @@ function Root() {
           if (body.success) {
             setUser(body.user);
             setToken(storageToken);
-            navigate("/chat");
+            navigate("/account");
           }
         })
         .catch((err) => console.log(err));

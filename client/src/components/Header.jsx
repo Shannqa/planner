@@ -5,7 +5,7 @@ import { AppContext } from "./Root.jsx";
 function Header() {
   return (
     <div className="header">
-      <h1>P tracker</h1>
+      <h1>Planner</h1>
     </div>
   );
 }

@@ -35,8 +35,8 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 app.use("/api/auth", authRouter);
-app.use("/api/todo", todoRouter);
-app.use("/api/project", projectRouter);
+app.use("/api/", todoRouter);
+app.use("/api/", projectRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

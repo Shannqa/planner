@@ -7,6 +7,9 @@ import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import Home from "./Home.jsx";
 import Account from "./Account.jsx";
+import Todos from "./Todos.jsx";
+import Projects from "./Projects.jsx";
+import ProjectAdd from "./ProjectAdd.jsx";
 
 function Router() {
   const router = createBrowserRouter([
@@ -26,6 +29,18 @@ function Router() {
         {
           path: "/signup",
           element: <Signup />,
+        },
+        {
+          path: "/todos",
+          element: <Todos />,
+        },
+        {
+          path: "/projects",
+          element: <Projects />,
+        },
+        {
+          path: "/project",
+          element: <ProjectAdd />,
         },
         {
           path: "/account",

@@ -13,12 +13,29 @@ const project_get = async (req, res) => {
   }
 };
 
-const project_post = async (req, res) => {
-  try {
-  } catch (err) {
-    res.status(500).send(err);
-  }
-};
+const projects_post = [
+  body("name", "Project must be at least 1 character long.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  async (req, res) => {
+    console.log(req.user);
+    try {
+      let body = { ...req.body, user: req.user };
+      const project = new Project(body);
+      await project.save();
+
+      res.status(200).json({
+        success: true,
+        msg: "success",
+        id: project._id,
+      });
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
+];
 
 const project_put = async (req, res) => {
   try {
@@ -34,4 +51,4 @@ const project_delete = async (req, res) => {
   }
 };
 
-export { project_get, project_post, project_put, project_delete };
+export { project_get, projects_post, project_put, project_delete };
