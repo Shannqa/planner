@@ -11,11 +11,14 @@ export const AppContext = createContext({
   setUser: () => {},
   token: "",
   setToken: () => {},
+  projects: [],
+  setProjects: () => {},
 });
 
 function Root() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [projects, setProjects] = useState([]);
   const navigate = useNavigate();
 
   // // verify token on refresh
@@ -50,6 +53,8 @@ function Root() {
         setUser,
         token,
         setToken,
+        projects,
+        setProjects,
       }}
     >
       <div className="root">

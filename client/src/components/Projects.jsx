@@ -5,8 +5,7 @@ import Login from "./Login.jsx";
 import { Link } from "react-router-dom";
 
 function Projects() {
-  const { user, token } = useContext(AppContext);
-  const [projects, setProjects] = useState([]);
+  const { user, token, projects, setProjects } = useContext(AppContext);
 
   useEffect(() => {
     fetch("/api/projects/", {

@@ -31,9 +31,9 @@ const todos_post = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-
+  body("project").escape(),
   async (req, res) => {
-    console.log(req.user);
+    console.log(req.body);
     try {
       let body = { ...req.body, user: req.user };
       const todo = new Todo(body);
@@ -45,6 +45,7 @@ const todos_post = [
         id: todo._id,
       });
     } catch (err) {
+      console.log(err);
       res.status(500).send(err);
     }
   },

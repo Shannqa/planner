@@ -5,7 +5,7 @@ import Login from "./Login.jsx";
 import { Link, useNavigate } from "react-router-dom";
 
 function TodoAdd() {
-  const { user, token } = useContext(AppContext);
+  const { user, token, projects, setProjects } = useContext(AppContext);
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
@@ -51,8 +51,20 @@ function TodoAdd() {
         <div>
           <label htmlFor="name">Todo's name:</label>
           <input name="name" onChange={(e) => setName(e.target.value)} />
-          <button type="submit">Add todo</button>
         </div>
+        <div>
+          <label htmlFor="project">Project:</label>
+          <select name="project">
+            <option value="">Choose a project</option>
+            {projects.length !== 0 &&
+              projects.map((project) => (
+                <option value={project._id} key={project._id}>
+                  {project.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <button type="submit">Add todo</button>
       </form>
     </div>
   );
