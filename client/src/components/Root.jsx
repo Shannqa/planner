@@ -9,59 +9,45 @@ import "../styles/main.css";
 export const AppContext = createContext({
   user: "",
   setUser: () => {},
-  users: [],
-  setUsers: () => {},
   token: "",
   setToken: () => {},
 });
 
 function Root() {
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState([]);
-  const [openTabs, setOpenTabs] = useState([]);
-  const [currentTab, setCurrentTab] = useState("All");
-  // const [loading, setLoading] = useState();
-  // const [error, setError] = useState(null);
   const [token, setToken] = useState(null);
-  const [allTab, setAllTab] = useState([]);
-  const [userListTab, setUserListTab] = useState("Rooms");
-  const lastMessageRef = useRef(null);
   const navigate = useNavigate();
-  const [contacts, setContacts] = useState([]);
-  const [userMenu, setUserMenu] = useState(false);
-  const [targetUser, setTargetUser] = useState(null);
-  // verify token on refresh
-  useEffect(() => {
-    const storageToken = localStorage.getItem("accessToken");
-    if (storageToken) {
-      fetch("/api/auth/check", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          authorization: storageToken,
-        },
-      })
-        .then((res) => res.json())
-        .then((body) => {
-          if (body.success) {
-            setUser(body.user);
-            setToken(storageToken);
-            navigate("/account");
-          }
-        })
-        .catch((err) => console.log(err));
-    } else {
-      console.log("not log");
-    }
-  }, [token]);
+
+  // // verify token on refresh
+  // useEffect(() => {
+  //   const storageToken = localStorage.getItem("accessToken");
+  //   if (storageToken) {
+  //     fetch("/api/auth/check", {
+  //       method: "POST",
+  //       headers: {
+  //         Accept: "application/json",
+  //         authorization: storageToken,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((body) => {
+  //         if (body.success) {
+  //           setUser(body.user);
+  //           setToken(storageToken);
+  //           navigate("/account");
+  //         }
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } else {
+  //     console.log("not log");
+  //   }
+  // }, [token]);
 
   return (
     <AppContext.Provider
       value={{
         user,
         setUser,
-        users,
-        setUsers,
         token,
         setToken,
       }}

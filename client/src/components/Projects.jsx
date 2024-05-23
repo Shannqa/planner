@@ -3,7 +3,6 @@ import { AppContext } from "./Root.jsx";
 import Account from "./Account.jsx";
 import Login from "./Login.jsx";
 import { Link } from "react-router-dom";
-// import styles from "../styles/Home.module.css";
 
 function Projects() {
   const { user, token } = useContext(AppContext);
@@ -27,9 +26,10 @@ function Projects() {
 
   return (
     <div className="main">
+      <h2>All projects</h2>
       <ul>
         <li>
-          <Link to="/todo">Add todo</Link>
+          <Link to="/todos/add">Add todo</Link>
         </li>
         <li>
           <Link to="/projects/add">Add project</Link>

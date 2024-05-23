@@ -58,8 +58,8 @@ function Login() {
       .then((res) => res.json())
       .then((body) => {
         if (body.success) {
+          console.log(body);
           setUser(body.user.username);
-          console.log(body.user.contacts);
           localStorage.setItem("accessToken", body.jwt.token);
           localStorage.setItem("username", body.user.username);
           localStorage.setItem("dbId", body.user._id);

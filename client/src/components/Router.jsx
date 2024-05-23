@@ -8,6 +8,8 @@ import Signup from "./Signup.jsx";
 import Home from "./Home.jsx";
 import Account from "./Account.jsx";
 import Todos from "./Todos.jsx";
+import TodoAdd from "./TodoAdd.jsx";
+import Todo from "./Todo.jsx";
 import Projects from "./Projects.jsx";
 import ProjectAdd from "./ProjectAdd.jsx";
 import Project from "./Project.jsx";
@@ -34,6 +36,14 @@ function Router() {
         {
           path: "/todos",
           element: <Todos />,
+        },
+        {
+          path: "/todos/add",
+          element: <TodoAdd />,
+        },
+        {
+          path: "/todos/:id",
+          element: <Todo />,
         },
         {
           path: "/projects",

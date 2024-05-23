@@ -2,16 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-function Project() {
+function Todo() {
   const { user, token } = useContext(AppContext);
-  const [project, setProject] = useState(null);
+  const [todo, setTodo] = useState(null);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
   const id = useParams().id;
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/api/projects/${id}`, {
+    fetch(`/api/todos/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -20,14 +20,14 @@ function Project() {
     })
       .then((res) => res.json())
       .then((json) => {
-        setProject(json);
+        setTodo(json);
         console.log(json);
       })
-      .catch((err) => console.log("Error fetching project", err));
+      .catch((err) => console.log("Error fetching todo", err));
   }, []);
 
-  function handleDeleteProject() {
-    fetch(`/api/projects/${id}`, {
+  function handleDeleteTodo() {
+    fetch(`/api/todos/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -39,7 +39,7 @@ function Project() {
       .then((body) => {
         if (body.success) {
           console.log(body);
-          navigate("/projects/");
+          navigate("/todos/");
         } else {
           // there are errors
           console.log(body);
@@ -54,10 +54,10 @@ function Project() {
     setEditing(true);
   }
 
-  function handleEditProject(e) {
+  function handleEditTodo(e) {
     e.preventDefault();
 
-    fetch(`/api/projects/${id}`, {
+    fetch(`/api/todos/${id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -72,7 +72,7 @@ function Project() {
       .then((body) => {
         if (body.success) {
           console.log(body);
-          setProject(body.project);
+          setTodo(body.todo);
           setEditing(false);
         } else {
           // there are errors
@@ -86,25 +86,25 @@ function Project() {
 
   return (
     <div className="main">
-      <h2>Project</h2>
+      <h2>Todo</h2>
       <ul>
         <li>
-          <Link to="/projects">Project list</Link>
+          <Link to="/todos">Todos list</Link>
         </li>
         <li>
-          <Link to="/todo">Add todo</Link>
+          <Link to="/todos/add">Add todo</Link>
         </li>
         <li>
           <Link to="/projects/add">Add project</Link>
         </li>
       </ul>
-      <div>{project ? project.name : ""}</div>
-      <button onClick={(e) => handleDeleteProject()}>Delete project</button>
-      <button onClick={(e) => startEditing()}>Edit project</button>
+      <div>{todo ? todo.name : ""}</div>
+      <button onClick={(e) => handleDeleteTodo()}>Delete todo</button>
+      <button onClick={(e) => startEditing()}>Edit todo</button>
 
       {editing ? (
-        <form onSubmit={(e) => handleEditProject(e)}>
-          <label htmlFor="name">Project's name:</label>
+        <form onSubmit={(e) => handleEditTodo(e)}>
+          <label htmlFor="name">Todo's name:</label>
           <input name="name" onChange={(e) => setName(e.target.value)} />
           <button type="submit">Change name</button>
         </form>
@@ -113,4 +113,4 @@ function Project() {
   );
 }
 
-export default Project;
+export default Todo;

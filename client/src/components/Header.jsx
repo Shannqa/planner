@@ -5,7 +5,9 @@ import { AppContext } from "./Root.jsx";
 function Header() {
   return (
     <div className="header">
-      <h1>Planner</h1>
+      <h1>
+        <Link to="/">Planner</Link>
+      </h1>
     </div>
   );
 }
