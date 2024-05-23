@@ -2,12 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import Account from "./Account.jsx";
 import Login from "./Login.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import styles from "../styles/Home.module.css";
 
 function ProjectAdd() {
-  const { user } = useContext(AppContext);
+  const { user, token } = useContext(AppContext);
   const [name, setName] = useState("");
+  const navigate = useNavigate();
 
   function handleAddProject(e) {
     e.preventDefault();
@@ -17,6 +18,7 @@ function ProjectAdd() {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: token,
       },
       body: JSON.stringify({
         name: name,
@@ -25,7 +27,9 @@ function ProjectAdd() {
       .then((res) => res.json())
       .then((body) => {
         if (body.success) {
-          console.log(body);
+          console.log(json);
+          const projectId = body.id;
+          navigate(`/projects/${projectId}`);
         } else {
           // there are errors
           console.log(body);

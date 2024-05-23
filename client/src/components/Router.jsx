@@ -10,6 +10,7 @@ import Account from "./Account.jsx";
 import Todos from "./Todos.jsx";
 import Projects from "./Projects.jsx";
 import ProjectAdd from "./ProjectAdd.jsx";
+import Project from "./Project.jsx";
 
 function Router() {
   const router = createBrowserRouter([
@@ -39,8 +40,12 @@ function Router() {
           element: <Projects />,
         },
         {
-          path: "/project",
+          path: "/projects/add",
           element: <ProjectAdd />,
+        },
+        {
+          path: "/projects/:id",
+          element: <Project />,
         },
         {
           path: "/account",
