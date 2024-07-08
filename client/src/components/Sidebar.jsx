@@ -8,7 +8,7 @@ function Sidebar() {
   const { user, token, categories, setCategories } = useContext(AppContext);
 
   useEffect(() => {
-    fetch("/api/projects/", {
+    fetch("/api/categories/", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

@@ -2,12 +2,22 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-function Project() {
-  const { user, token } = useContext(AppContext);
+function Category() {
+  const { user, token, categories } = useContext(AppContext);
   const [category, setCategory] = useState(null);
+  const [notes, setNotes] = useState(null);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
   const id = useParams().id;
+  const currentCategory = categories.find((cat) => cat._id === id);
+  console.log(currentCategory);
+  // if (currentCategory) {
+  //   console.log(currentCategory);
+  //   setName(currentCategory.name);
+  // }
+  // setName(currentCategory.name);
+
+  // setCurrentCategory(categories.find((cat) => cat._id === id));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +30,7 @@ function Project() {
     })
       .then((res) => res.json())
       .then((json) => {
-        setCategory(json);
+        setNotes(json);
         console.log(json);
       })
       .catch((err) => console.log("Error fetching category", err));
@@ -84,31 +94,34 @@ function Project() {
       });
   }
 
+  function handleAddNote(e) {
+    navigate("/notes/add/", { state: currentCategory });
+  }
+
   return (
     <div className="main">
-      <h2>{category.name}</h2>
+      <h2>{currentCategory && currentCategory.name}</h2>
       <div>
         <button onClick={(e) => handleAddNote(e)}>Add note</button>
         <button onClick={(e) => handleSelect(e)}>Select note(s)</button>
       </div>
+      {/* <div>
+        {notes.length === 0
+          ? null
+          : notes.map((note) => {
+              return (
+                <div>
+                  <div>{note.title}</div>
+                  <div>{note.content}</div>
+                </div>
+              );
+            })}
+      </div> */}
       <div>
-        {notes.length === 0 ? null : notes.map(note => {
-          return(
-            <div>
-              <div>{note.title}</div>
-              <div>{note.content}</div>
-            </div>
-          )
-        })}
-    
-      </div>
-     <div>
-       <p>Category settings</p>
+        <p>Category settings</p>
         <button onClick={(e) => handleDeleteCategory()}>Delete category</button>
         <button onClick={(e) => startEditing()}>Rename category</button>
-     
-     </div>
-
+      </div>
 
       {editing ? (
         <form onSubmit={(e) => handleEditCategory(e)}>

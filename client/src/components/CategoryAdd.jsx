@@ -4,7 +4,7 @@ import Account from "./Account.jsx";
 import Login from "./Login.jsx";
 import { Link, useNavigate } from "react-router-dom";
 
-function ProjectAdd() {
+function CategoryAdd() {
   const { user, token } = useContext(AppContext);
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ function ProjectAdd() {
   function handleAddCategory(e) {
     e.preventDefault();
 
-    fetch("/api/category", {
+    fetch("/api/categories", {
       method: "POST",
       headers: {
         Accept: "application/json",

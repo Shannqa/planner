@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-function Todo() {
+function Note() {
   const { user, token } = useContext(AppContext);
   const [note, setNote] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -22,7 +22,7 @@ function Todo() {
       .then((res) => res.json())
       .then((json) => {
         setNote(json);
-        console.log(json); 
+        console.log(json);
       })
       .catch((err) => console.log("Error fetching note", err));
   }, []);
@@ -67,7 +67,7 @@ function Todo() {
       },
       body: JSON.stringify({
         title: title,
-        content: content
+        content: content,
       }),
     })
       .then((res) => res.json())
@@ -86,18 +86,15 @@ function Todo() {
       });
   }
 
-if (!note) {
-  return (
-    <div>Error, invalid note.</div>
-  )
-}
+  if (!note) {
+    return <div>Error, invalid note.</div>;
+  }
 
   return (
     <div className="main">
-    
       <h2>{note.title}</h2>
       <p>{note.content}</p>
-      
+
       <button onClick={(e) => handleDeleteNote()}>Delete note</button>
       <button onClick={(e) => startEditing()}>Edit note</button>
 
@@ -105,28 +102,31 @@ if (!note) {
         <form onSubmit={(e) => handleEditTodo(e)}>
           <label htmlFor="title">Title:</label>
           <input name="title" onChange={(e) => setTitle(e.target.value)} />
-         
-                <div>
-          <label htmlFor="content">Content:</label>
-          <textarea name="content" onChange={(e) => setContent(e.target.value)} />
-        </div>
-        <div>
-          <label htmlFor="category">Category:</label>
-          <select name="category">
-            <option value="">Choose a category</option>
-            {categories.length !== 0 &&
-              categories.map((category) => (
-                <option value={category._id} key={category._id}>
-                  {category.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <button type="submit">Add note</button>
-      </form>
+
+          <div>
+            <label htmlFor="content">Content:</label>
+            <textarea
+              name="content"
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="category">Category:</label>
+            <select name="category">
+              <option value="">Choose a category</option>
+              {categories.length !== 0 &&
+                categories.map((category) => (
+                  <option value={category._id} key={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <button type="submit">Add note</button>
+        </form>
       ) : null}
     </div>
   );
 }
 
-export default Todo;
+export default Note;

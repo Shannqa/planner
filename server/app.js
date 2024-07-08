@@ -7,8 +7,8 @@ import __dirname from "./utils/dirname.js";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import authRouter from "./routes/authRouter.js";
-import todoRouter from "./routes/todoRouter.js";
-import projectRouter from "./routes/projectRouter.js";
+import noteRouter from "./routes/noteRouter.js";
+import categoryRouter from "./routes/categoryRouter.js";
 import connectDB from "./config/db.js";
 import MongoStore from "connect-mongo";
 const app = express();
@@ -35,8 +35,8 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 app.use("/api/auth", authRouter);
-app.use("/api/", todoRouter);
-app.use("/api/", projectRouter);
+app.use("/api/notes", noteRouter);
+app.use("/api/categories", categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -50,8 +50,8 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  res.status(err.status || 500).json(err);
+  // res.render("error");
 });
 
 export default app;

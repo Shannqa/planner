@@ -7,12 +7,12 @@ import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import Home from "./Home.jsx";
 import Account from "./Account.jsx";
-import Todos from "./Todos.jsx";
-import TodoAdd from "./TodoAdd.jsx";
-import Todo from "./Todo.jsx";
-import Projects from "./Projects.jsx";
-import ProjectAdd from "./ProjectAdd.jsx";
-import Project from "./Project.jsx";
+import Note from "./Note.jsx";
+import NoteAdd from "./NoteAdd.jsx";
+import Categories from "./Categories.jsx";
+import CategoryAdd from "./CategoryAdd.jsx";
+import Category from "./Category.jsx";
+import Main from "./Main.jsx";
 
 function Router() {
   const router = createBrowserRouter([
@@ -23,7 +23,7 @@ function Router() {
       children: [
         {
           index: true,
-          element: <Home />,
+          element: <Main />,
         },
         {
           path: "/login",
@@ -34,28 +34,28 @@ function Router() {
           element: <Signup />,
         },
         {
-          path: "/todos",
-          element: <Todos />,
+          path: "/notes",
+          element: <Note />,
         },
         {
-          path: "/todos/add",
-          element: <TodoAdd />,
+          path: "/notes/add",
+          element: <NoteAdd />,
         },
         {
-          path: "/todos/:id",
-          element: <Todo />,
+          path: "/notes/:id",
+          element: <Note />,
         },
         {
-          path: "/projects",
-          element: <Projects />,
+          path: "/categories",
+          element: <Categories />,
         },
         {
-          path: "/projects/add",
-          element: <ProjectAdd />,
+          path: "/categories/add",
+          element: <CategoryAdd />,
         },
         {
-          path: "/projects/:id",
-          element: <Project />,
+          path: "/categories/:id",
+          element: <Category />,
         },
         {
           path: "/account",

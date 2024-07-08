@@ -17,10 +17,10 @@ function Projects() {
     })
       .then((res) => res.json())
       .then((json) => {
-        setProjects(json);
+        setCategories(json);
         console.log(json);
       })
-      .catch((err) => console.log("Error fetching projects", err));
+      .catch((err) => console.log("Error fetching categories", err));
   }, []);
 
   return (

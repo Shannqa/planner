@@ -1,4 +1,5 @@
 import Category from "../models/categorySchema.js";
+import Note from "../models/noteSchema.js";
 import { body, validationResult } from "express-validator";
 
 // list all categories of a user
@@ -24,8 +25,7 @@ const categories_post = [
 
   async (req, res) => {
     try {
-      
-      let body = { user: req.user, ...req.body, };
+      let body = { user: req.user, ...req.body };
       const category = new Category(body);
       await category.save();
 
@@ -37,15 +37,17 @@ const categories_post = [
       res.status(500).send(err);
     }
   },
-]
-
+];
 
 // get all notes for a single category
 
 const categories_id_get = async (req, res) => {
   try {
-    const notes = await Note.find({user: req.user._id, category: { $in: [ req.params.id ]}}) // check if [] needed or not for a single argument
-    
+    const notes = await Note.find({
+      user: req.user._id,
+      category: { $in: [req.params.id] },
+    }); // check if [] needed or not for a single argument
+    console.log(notes);
     if (!notes) {
       res.status(204).json({ msg: "No notes for this category" });
     } else {
@@ -80,7 +82,7 @@ const categories_id_put = [
       res.status(500).json(err);
     }
   },
-]
+];
 
 // delete category
 const categories_id_delete = async (req, res) => {
@@ -101,5 +103,5 @@ export {
   categories_post,
   categories_id_get,
   categories_id_put,
-  categories_id_delete
+  categories_id_delete,
 };

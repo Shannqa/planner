@@ -13,16 +13,19 @@ const LocalAuth = new LocalStrategy(async (username, password, done) => {
   try {
     const user = await User.findOne({ username: username });
     if (!user) {
+      console.log("incorrect user");
       return done(null, false, { message: "Incorrect username" });
     }
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
+      console.log("incorrect password");
       return done(null, false, { message: "Incorrect password" });
     }
     const jwt = issueJWT(user);
     return done(null, user);
   } catch (err) {
+    console.log(err);
     return done(err, { message: "error" });
   }
 });
@@ -60,10 +63,14 @@ const JwtAuth = new JwtStrategy(options, (payload, done) => {
       if (user) {
         return done(null, user);
       } else {
+        console.log("not good");
         return done(null, false);
       }
     })
-    .catch((err) => done(err, null));
+    .catch((err) => {
+      console.log(err);
+      return done(err, null);
+    });
 });
 
 const authJWT = passport.authenticate("jwt", { session: false });
