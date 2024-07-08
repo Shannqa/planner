@@ -14,7 +14,9 @@ function NoteAdd() {
   const parentCategory = useLocation().state;
 
   useEffect(() => {
-    setCategory(parentCategory._id);
+    if (parentCategory) {
+      setCategory(parentCategory._id);
+    }
   }, [parentCategory]);
 
   console.log(parentCategory);
@@ -67,7 +69,7 @@ function NoteAdd() {
           <label htmlFor="category">Category:</label>
           <select
             name="category"
-            value={parentCategory && parentCategory._id}
+            value={parentCategory ? parentCategory._id : ""}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">Choose a category</option>

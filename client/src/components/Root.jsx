@@ -2,6 +2,7 @@ import { useState, useEffect, createContext, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import React from "react";
 import Header from "./Header.jsx";
+import Main from "./Main.jsx";
 import Footer from "./Footer.jsx";
 import "../styles/main.css";
 
@@ -34,7 +35,7 @@ function Root() {
       <div className="root">
         <Header />
         {/* {error && <ErrorModal message={error} />} */}
-        <Outlet />
+        <Main />
         <Footer />
       </div>
     </AppContext.Provider>

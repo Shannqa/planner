@@ -24,7 +24,8 @@ function Sidebar() {
   }, []);
 
   return (
-    <div className="main">
+    <div className="sidebar">
+      <h2>Actions</h2>
       <ul>
         <li>
           <Link to="/notes/add">Add note</Link>
@@ -34,15 +35,17 @@ function Sidebar() {
         </li>
       </ul>
       <h2>All categories</h2>
-      <div>
+      <ul>
         {categories.map((category) => {
           return (
-            <Link to={`/categories/${category._id}`} key={category._id}>
-              {category.name}
-            </Link>
+            <li key={category._id}>
+              <Link to={`/categories/${category._id}`} key={category._id}>
+                {category.name}
+              </Link>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 }
