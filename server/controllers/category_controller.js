@@ -46,7 +46,9 @@ const categories_id_get = async (req, res) => {
     const notes = await Note.find({
       user: req.user._id,
       category: { $in: [req.params.id] },
-    }); // check if [] needed or not for a single argument
+    })
+      .populate("category", ["name"])
+      .exec(); // check if [] needed or not for a single argument
     console.log(notes);
     if (!notes) {
       res.status(204).json({ msg: "No notes for this category" });

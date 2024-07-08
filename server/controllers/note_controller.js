@@ -75,7 +75,9 @@ const notes_delete = async (req, res) => {
 // get a single note
 const notes_id_get = async (req, res) => {
   try {
-    const note = await Note.findById(req.params.id).exec();
+    const note = await Note.findById(req.params.id)
+      .populate("category", ["name"])
+      .exec();
     if (!note) {
       res.status(204).json({ msg: "No note with this id" });
     }
@@ -131,7 +133,9 @@ const notes_id_delete = async (req, res) => {
 // get all notes of a user
 const notes_all_get = async (req, res) => {
   try {
-    const notes = await Note.find({ user: req.user._id }).exec();
+    const notes = await Note.find({ user: req.user._id })
+      .populate("category", ["name"])
+      .exec();
     console.log(req.user);
     if (!notes) {
       res.status(204).json({ msg: "No notes found" });

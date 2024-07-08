@@ -40,7 +40,7 @@ function Note() {
       .then((body) => {
         if (body.success) {
           console.log(body);
-          navigate("/todos/");
+          navigate("/notes/");
         } else {
           // there are errors
           console.log(body);
@@ -92,8 +92,13 @@ function Note() {
 
   return (
     <div className="main">
-      <h2>{note.title}</h2>
-      <p>{note.content}</p>
+      <h2>Title: {note.title}</h2>
+      <p>Content: {note.content}</p>
+      <p>
+        <Link to={"/categories/" + note.category._id}>
+          Category: {note.category.name}
+        </Link>
+      </p>
 
       <button onClick={(e) => handleDeleteNote()}>Delete note</button>
       <button onClick={(e) => startEditing()}>Edit note</button>

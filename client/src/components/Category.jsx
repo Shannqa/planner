@@ -105,18 +105,20 @@ function Category() {
         <button onClick={(e) => handleAddNote(e)}>Add note</button>
         <button onClick={(e) => handleSelect(e)}>Select note(s)</button>
       </div>
-      {/* <div>
-        {notes.length === 0
-          ? null
-          : notes.map((note) => {
-              return (
+      <div>
+        {notes &&
+          notes.map((note) => {
+            return (
+              <div key={note._id}>
                 <div>
-                  <div>{note.title}</div>
-                  <div>{note.content}</div>
+                  <Link to={"/notes/" + note._id}>Title: {note.title}</Link>
                 </div>
-              );
-            })}
-      </div> */}
+                <div>Content: {note.content}</div>
+                <div>Category: {note.category.name}</div>
+              </div>
+            );
+          })}
+      </div>
       <div>
         <p>Category settings</p>
         <button onClick={(e) => handleDeleteCategory()}>Delete category</button>
