@@ -13,10 +13,10 @@ function Account() {
       <p>Hello, {user}</p>
       <ul>
         <li>
-          <Link to="/todos">Todos</Link>
+          <Link to="/notes">Notes</Link>
         </li>
         <li>
-          <Link to="/projects">Projects</Link>
+          <Link to="/categories">Categories</Link>
         </li>
       </ul>
 

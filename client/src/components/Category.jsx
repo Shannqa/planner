@@ -2,16 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-function Todo() {
+function Project() {
   const { user, token } = useContext(AppContext);
-  const [todo, setTodo] = useState(null);
+  const [category, setCategory] = useState(null);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
   const id = useParams().id;
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/api/todos/${id}`, {
+    fetch(`/api/categories/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -20,14 +20,14 @@ function Todo() {
     })
       .then((res) => res.json())
       .then((json) => {
-        setTodo(json);
+        setCategory(json);
         console.log(json);
       })
-      .catch((err) => console.log("Error fetching todo", err));
+      .catch((err) => console.log("Error fetching category", err));
   }, []);
 
-  function handleDeleteTodo() {
-    fetch(`/api/todos/${id}`, {
+  function handleDeleteCategory() {
+    fetch(`/api/categories/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -39,7 +39,7 @@ function Todo() {
       .then((body) => {
         if (body.success) {
           console.log(body);
-          navigate("/todos/");
+          navigate("/categories/");
         } else {
           // there are errors
           console.log(body);
@@ -54,10 +54,10 @@ function Todo() {
     setEditing(true);
   }
 
-  function handleEditTodo(e) {
+  function handleEditCategory(e) {
     e.preventDefault();
 
-    fetch(`/api/todos/${id}`, {
+    fetch(`/api/categories/${id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -72,7 +72,7 @@ function Todo() {
       .then((body) => {
         if (body.success) {
           console.log(body);
-          setTodo(body.todo);
+          setCategory(body.category);
           setEditing(false);
         } else {
           // there are errors
@@ -86,25 +86,33 @@ function Todo() {
 
   return (
     <div className="main">
-      <h2>Todo</h2>
-      <ul>
-        <li>
-          <Link to="/todos">Todos list</Link>
-        </li>
-        <li>
-          <Link to="/todos/add">Add todo</Link>
-        </li>
-        <li>
-          <Link to="/projects/add">Add project</Link>
-        </li>
-      </ul>
-      <div>{todo ? todo.name : ""}</div>
-      <button onClick={(e) => handleDeleteTodo()}>Delete todo</button>
-      <button onClick={(e) => startEditing()}>Edit todo</button>
+      <h2>{category.name}</h2>
+      <div>
+        <button onClick={(e) => handleAddNote(e)}>Add note</button>
+        <button onClick={(e) => handleSelect(e)}>Select note(s)</button>
+      </div>
+      <div>
+        {notes.length === 0 ? null : notes.map(note => {
+          return(
+            <div>
+              <div>{note.title}</div>
+              <div>{note.content}</div>
+            </div>
+          )
+        })}
+    
+      </div>
+     <div>
+       <p>Category settings</p>
+        <button onClick={(e) => handleDeleteCategory()}>Delete category</button>
+        <button onClick={(e) => startEditing()}>Rename category</button>
+     
+     </div>
+
 
       {editing ? (
-        <form onSubmit={(e) => handleEditTodo(e)}>
-          <label htmlFor="name">Todo's name:</label>
+        <form onSubmit={(e) => handleEditCategory(e)}>
+          <label htmlFor="name">Category's name:</label>
           <input name="name" onChange={(e) => setName(e.target.value)} />
           <button type="submit">Change name</button>
         </form>
@@ -113,4 +121,4 @@ function Todo() {
   );
 }
 
-export default Todo;
+export default Category;

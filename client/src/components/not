@@ -1,0 +1,50 @@
+root - show login form or show logged
+
+on login, fetch user, including embedded categories
+
+user model
+
+{
+name: xxx,
+password: xxx,
+categories: [
+  {
+    id: 0,
+    name: All
+  },
+  {
+    id: 1,
+    name: Archive
+  },
+  {
+    id: 2,
+    name: Trash
+  },
+  {
+    id: 3...,
+    name: xxx
+  }
+]
+}
+
+note model
+{
+  user: xxx,
+  title,
+  content,
+  category: [0, 3],
+}
+
+addCategory() {
+  User.updateOne(id, {categories: $push({id: id, name: name})})
+}
+
+or user model has a ref to categories document
+
+/notes/id - single note
+/categories/id - single category
+/categories/all - all category, list all notes
+/categories/archive
+/categories/trash
+/categories/0
+/categories/1

@@ -2,16 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-function Project() {
+function Todo() {
   const { user, token } = useContext(AppContext);
-  const [project, setProject] = useState(null);
+  const [note, setNote] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const id = useParams().id;
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/api/projects/${id}`, {
+    fetch(`/api/notes/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -20,14 +21,14 @@ function Project() {
     })
       .then((res) => res.json())
       .then((json) => {
-        setProject(json);
-        console.log(json);
+        setNote(json);
+        console.log(json); 
       })
-      .catch((err) => console.log("Error fetching project", err));
+      .catch((err) => console.log("Error fetching note", err));
   }, []);
 
-  function handleDeleteProject() {
-    fetch(`/api/projects/${id}`, {
+  function handleDeleteNote() {
+    fetch(`/api/notes/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -39,7 +40,7 @@ function Project() {
       .then((body) => {
         if (body.success) {
           console.log(body);
-          navigate("/projects/");
+          navigate("/todos/");
         } else {
           // there are errors
           console.log(body);
@@ -54,10 +55,10 @@ function Project() {
     setEditing(true);
   }
 
-  function handleEditProject(e) {
+  function handleEditNote(e) {
     e.preventDefault();
 
-    fetch(`/api/projects/${id}`, {
+    fetch(`/api/notes/${id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -65,14 +66,15 @@ function Project() {
         Authorization: token,
       },
       body: JSON.stringify({
-        name: name,
+        title: title,
+        content: content
       }),
     })
       .then((res) => res.json())
       .then((body) => {
         if (body.success) {
           console.log(body);
-          setProject(body.project);
+          setNote(body.note);
           setEditing(false);
         } else {
           // there are errors
@@ -84,33 +86,47 @@ function Project() {
       });
   }
 
+if (!note) {
+  return (
+    <div>Error, invalid note.</div>
+  )
+}
+
   return (
     <div className="main">
-      <h2>Project</h2>
-      <ul>
-        <li>
-          <Link to="/projects">Project list</Link>
-        </li>
-        <li>
-          <Link to="/todo">Add todo</Link>
-        </li>
-        <li>
-          <Link to="/projects/add">Add project</Link>
-        </li>
-      </ul>
-      <div>{project ? project.name : ""}</div>
-      <button onClick={(e) => handleDeleteProject()}>Delete project</button>
-      <button onClick={(e) => startEditing()}>Edit project</button>
+    
+      <h2>{note.title}</h2>
+      <p>{note.content}</p>
+      
+      <button onClick={(e) => handleDeleteNote()}>Delete note</button>
+      <button onClick={(e) => startEditing()}>Edit note</button>
 
       {editing ? (
-        <form onSubmit={(e) => handleEditProject(e)}>
-          <label htmlFor="name">Project's name:</label>
-          <input name="name" onChange={(e) => setName(e.target.value)} />
-          <button type="submit">Change name</button>
-        </form>
+        <form onSubmit={(e) => handleEditTodo(e)}>
+          <label htmlFor="title">Title:</label>
+          <input name="title" onChange={(e) => setTitle(e.target.value)} />
+         
+                <div>
+          <label htmlFor="content">Content:</label>
+          <textarea name="content" onChange={(e) => setContent(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="category">Category:</label>
+          <select name="category">
+            <option value="">Choose a category</option>
+            {categories.length !== 0 &&
+              categories.map((category) => (
+                <option value={category._id} key={category._id}>
+                  {category.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <button type="submit">Add note</button>
+      </form>
       ) : null}
     </div>
   );
 }
 
-export default Project;
+export default Todo;

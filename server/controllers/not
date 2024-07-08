@@ -1,0 +1,18 @@
+on log in
+fetch user
+  user.categories = ref to user's categories
+  set state - custom categories: [{id: 0, name: "work"}]
+  
+  
+  /categories/all
+  fetch all notes in category all
+    get request categories/all, uid:  req.user.id, cid: req.params.id
+    const notes = await Note.find({ user: req.user.id, category: { $in: [ "all" ]}}) // check if [] needed or not for a single argument
+    
+  /categories/:id
+  fetch get /categories/:id
+  
+  
+  
+  
+  

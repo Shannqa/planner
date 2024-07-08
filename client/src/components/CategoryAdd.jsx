@@ -9,10 +9,10 @@ function ProjectAdd() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  function handleAddProject(e) {
+  function handleAddCategory(e) {
     e.preventDefault();
 
-    fetch("/api/project", {
+    fetch("/api/category", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -27,8 +27,8 @@ function ProjectAdd() {
       .then((body) => {
         if (body.success) {
           console.log(json);
-          const projectId = body.id;
-          navigate(`/projects/${projectId}`);
+          const categoryId = body.id;
+          navigate(`/categoriees/${categoryId}`);
         } else {
           // there are errors
           console.log(body);
@@ -41,15 +41,15 @@ function ProjectAdd() {
 
   return (
     <div className="main">
-      <form onSubmit={(e) => handleAddProject(e)}>
+      <form onSubmit={(e) => handleAddCategory(e)}>
         <div>
-          <label htmlFor="name">Project's name:</label>
+          <label htmlFor="name">Category's name:</label>
           <input name="name" onChange={(e) => setName(e.target.value)} />
-          <button type="submit">Add project</button>
+          <button type="submit">Add category</button>
         </div>
       </form>
     </div>
   );
 }
 
-export default ProjectAdd;
+export default CategoryAdd;
