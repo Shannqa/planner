@@ -12,7 +12,6 @@ import NoteAdd from "./NoteAdd.jsx";
 import Categories from "./Categories.jsx";
 import CategoryAdd from "./CategoryAdd.jsx";
 import Category from "./Category.jsx";
-import Main from "./Main.jsx";
 
 function Router() {
   const router = createBrowserRouter([
@@ -23,7 +22,7 @@ function Router() {
       children: [
         {
           index: true,
-          element: <Main />,
+          element: <Home />,
         },
         {
           path: "/login",

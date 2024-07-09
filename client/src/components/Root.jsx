@@ -2,8 +2,10 @@ import { useState, useEffect, createContext, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import React from "react";
 import Header from "./Header.jsx";
-import Main from "./Main.jsx";
 import Footer from "./Footer.jsx";
+import HomeGuest from "./HomeGuest.jsx";
+import Home from "./Home.jsx";
+import Sidebar from "./Sidebar.jsx";
 import "../styles/main.css";
 
 export const AppContext = createContext({
@@ -35,7 +37,14 @@ function Root() {
       <div className="root">
         <Header />
         {/* {error && <ErrorModal message={error} />} */}
-        <Main />
+        {user ? (
+          <div className="root-home">
+            <Sidebar />
+            <Outlet />
+          </div>
+        ) : (
+          <HomeGuest />
+        )}
         <Footer />
       </div>
     </AppContext.Provider>

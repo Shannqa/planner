@@ -26,8 +26,8 @@ function Home() {
 
   return (
     <div className="home">
-      <Sidebar />
-      <Outlet />
+      {/* <Sidebar /> */}
+      <p>Hi, {user}!</p>
     </div>
   );
 }
