@@ -34,8 +34,11 @@ function Sidebar() {
           <Link to="/categories/add">Add category</Link>
         </li>
       </ul>
-      <h2>All categories</h2>
+      <h2>Categories</h2>
       <ul>
+        <li>
+          <Link to={"/notes/"}>All notes</Link>
+        </li>
         {categories.map((category) => {
           return (
             <li key={category._id}>

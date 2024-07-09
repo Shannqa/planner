@@ -1,6 +1,22 @@
 import Note from "../models/noteSchema.js";
 import { body, validationResult } from "express-validator";
 
+// get all notes
+const notes_get = async (req, res) => {
+  try {
+    const notes = await Note.find({ user: req.user._id })
+      .populate("category", ["name"])
+      .exec();
+    console.log(req.user);
+    if (!notes) {
+      res.status(204).json({ msg: "No notes found" });
+    }
+    res.status(200).json(notes);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 // add a note
 const notes_post = [
   body("title", "The title must be at least 1 character long.")
@@ -130,28 +146,12 @@ const notes_id_delete = async (req, res) => {
   }
 };
 
-// get all notes of a user
-const notes_all_get = async (req, res) => {
-  try {
-    const notes = await Note.find({ user: req.user._id })
-      .populate("category", ["name"])
-      .exec();
-    console.log(req.user);
-    if (!notes) {
-      res.status(204).json({ msg: "No notes found" });
-    }
-    res.status(200).json(notes);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
 export {
   notes_id_get,
   notes_post,
   notes_put,
   notes_delete,
-  notes_all_get,
+  notes_get,
   notes_id_put,
   notes_id_delete,
 };

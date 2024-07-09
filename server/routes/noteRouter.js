@@ -1,4 +1,5 @@
 import {
+  notes_get,
   notes_post,
   notes_put,
   notes_delete,
@@ -10,6 +11,9 @@ import express from "express";
 import { LocalAuth, JwtAuth, authJWT } from "../config/auth.js";
 
 const router = express.Router();
+
+// get all notes
+router.get("/", authJWT, notes_get);
 
 // add a note
 router.post("/", authJWT, notes_post);

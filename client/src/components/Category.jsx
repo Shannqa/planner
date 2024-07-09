@@ -100,7 +100,7 @@ function Category() {
 
   return (
     <div className="main">
-      <h2>{currentCategory && currentCategory.name}</h2>
+      <h2>{currentCategory && "Category: " + currentCategory.name}</h2>
       <div>
         <button onClick={(e) => handleAddNote(e)}>Add note</button>
         <button onClick={(e) => handleSelect(e)}>Select note(s)</button>
@@ -109,12 +109,17 @@ function Category() {
         {notes &&
           notes.map((note) => {
             return (
-              <div key={note._id}>
-                <div>
+              <div key={note._id} className="note">
+                <h3>
                   <Link to={"/notes/" + note._id}>Title: {note.title}</Link>
-                </div>
+                </h3>
                 <div>Content: {note.content}</div>
-                <div>Category: {note.category.name}</div>
+                <div>
+                  {" "}
+                  <Link to={"/categories/" + note.category._id}>
+                    Category: {note.category.name}
+                  </Link>
+                </div>
               </div>
             );
           })}

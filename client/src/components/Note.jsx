@@ -91,7 +91,7 @@ function Note() {
   }
 
   return (
-    <div className="main">
+    <div className="single-note">
       <h2>Title: {note.title}</h2>
       <p>Content: {note.content}</p>
       <p>

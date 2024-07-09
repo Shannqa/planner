@@ -23,25 +23,19 @@ body {
   position: relative;
 }
 
-.account {
-  display: flex;
-}
-
-.account > div {
-  margin: 50px;
-}
-
-.button {
+button {
   background-color: #abafea;
   border: 1px #8285b5 solid;
   font-size: 1rem;
+  padding: 4px 8px;
+  margin: 4px 4px 0 0;
 }
 
-.button:hover {
+button:hover {
   background-color: #8285b5;
 }
 
-.button:active {
+button:active {
   background-color: #b68f6a;
 }
 
@@ -76,4 +70,16 @@ body {
   display: grid;
   grid-template-columns: 200px 1fr;
   padding: 10px;
+}
+
+.sidebar {
+  margin-left: 10px;
+}
+
+.note,
+.single-note {
+  line-height: 1.5rem;
+  border: 1px grey solid;
+  padding: 4px;
+  margin: 4px 0;
 }
