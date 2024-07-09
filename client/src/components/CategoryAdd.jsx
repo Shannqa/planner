@@ -39,14 +39,26 @@ function CategoryAdd() {
       });
   }
 
+  function handleCancel() {
+    navigate(-1);
+  }
+
   return (
-    <div className="main">
+    <div className="category-add">
+      <h2>Add category</h2>
       <form onSubmit={(e) => handleAddCategory(e)}>
         <div>
           <label htmlFor="name">Category's name:</label>
           <input name="name" onChange={(e) => setName(e.target.value)} />
-          <button type="submit">Add category</button>
         </div>
+        <button type="submit">Add category</button>
+        <button
+          onClick={() => {
+            handleCancel();
+          }}
+        >
+          Cancel
+        </button>
       </form>
     </div>
   );

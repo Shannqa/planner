@@ -83,3 +83,36 @@ button:active {
   padding: 4px;
   margin: 4px 0;
 }
+
+.note-add form,
+.category-add form {
+  line-height: 1.5rem;
+  border: 1px grey solid;
+  padding: 4px;
+  margin: 4px 0;
+}
+
+.note-add form div,
+.category-add form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.note-add form input,
+.category-add form input {
+  padding: 4px 2px;
+}
+
+.note-add form textarea {
+  padding: 4px 2px;
+  height: 10rem;
+}
+
+.note-add form select {
+  padding: 4px 2px;
+}
+
+.note-add button,
+.category-add button {
+  margin: 8px 8px 4px 0;
+}

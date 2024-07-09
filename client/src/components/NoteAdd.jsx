@@ -51,8 +51,14 @@ function NoteAdd() {
         console.log(err);
       });
   }
+
+  function handleCancel() {
+    navigate(-1);
+  }
+
   return (
-    <div className="main">
+    <div className="note-add">
+      <h2>Add note</h2>
       <form onSubmit={(e) => handleAddNote(e)}>
         <div>
           <label htmlFor="title">Title:</label>
@@ -82,6 +88,13 @@ function NoteAdd() {
           </select>
         </div>
         <button type="submit">Add note</button>
+        <button
+          onClick={() => {
+            handleCancel();
+          }}
+        >
+          Cancel
+        </button>
       </form>
     </div>
   );

@@ -5,6 +5,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 function Category() {
   const { user, token, categories } = useContext(AppContext);
   const [category, setCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState(null);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
@@ -33,7 +34,10 @@ function Category() {
         setNotes(json);
         console.log(json);
       })
-      .catch((err) => console.log("Error fetching category", err));
+      .catch((err) => console.log("Error fetching category", err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   function handleDeleteCategory() {
@@ -96,6 +100,10 @@ function Category() {
 
   function handleAddNote(e) {
     navigate("/notes/add/", { state: currentCategory });
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (

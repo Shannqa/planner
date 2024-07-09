@@ -5,6 +5,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 function Notes() {
   const { user, token } = useContext(AppContext);
   const [notes, setNotes] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -23,8 +24,15 @@ function Notes() {
         setNotes(json);
         console.log(json);
       })
-      .catch((err) => console.log("Error fetching note", err));
+      .catch((err) => console.log("Error fetching note", err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!notes) {
     return <div>Error, no notes.</div>;
