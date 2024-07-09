@@ -117,13 +117,20 @@ const notes_id_put = [
   async (req, res) => {
     try {
       let body = { ...req.body, user: req.user };
-      const note = await Note.findByIdAndUpdate(req.params.id, body).exec();
-      const updatedNote = await Note.findById(req.params.id);
-
+      console.log("body", req.body);
+      const note = await Note.findByIdAndUpdate(req.params.id, body)
+        .populate("category", ["name"])
+        .exec();
+      console.log("note", note);
+      const updatedNote = await Note.findById(req.params.id).populate(
+        "category",
+        ["name"]
+      );
+      console.log("updated", updatedNote);
       if (!note) {
         res.status(204).json({ msg: "No note with this id" });
       } else {
-        res.status(200).json({ success: true, todo: updatedNote });
+        res.status(200).json({ success: true, note: updatedNote });
       }
     } catch (err) {
       res.status(500).json(err);
