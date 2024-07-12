@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { AppContext } from "./Root.jsx";
+import { Editor } from "@tinymce/tinymce-react";
 import Account from "./Account.jsx";
 import Login from "./Login.jsx";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import TINY from "./apiKey.js";
 
 function NoteAdd() {
   const { user, token, categories } = useContext(AppContext);
@@ -10,7 +12,7 @@ function NoteAdd() {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
-
+  const editorRef = useRef(null);
   const parentCategory = useLocation().state;
 
   useEffect(() => {
@@ -24,6 +26,8 @@ function NoteAdd() {
   function handleAddNote(e) {
     e.preventDefault();
 
+    let tinyContent = editorRef.current.getContent();
+
     fetch("/api/notes", {
       method: "POST",
       headers: {
@@ -33,7 +37,7 @@ function NoteAdd() {
       },
       body: JSON.stringify({
         title: title,
-        content: content,
+        content: tinyContent,
         category: category,
       }),
     })
@@ -60,18 +64,37 @@ function NoteAdd() {
     <div className="note-add">
       <h2>Add note</h2>
       <form onSubmit={(e) => handleAddNote(e)}>
-        <div>
+        <div className="title">
           <label htmlFor="title">Title:</label>
           <input name="title" onChange={(e) => setTitle(e.target.value)} />
         </div>
         <div>
           <label htmlFor="content">Content:</label>
-          <textarea
-            name="content"
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <Editor
+            apiKey={TINY}
+            onInit={(e, editor) => (editorRef.current = editor)}
+            init={{
+              height: 500,
+              menubar: false,
+              plugins: [
+                "advlist",
+                "autolink",
+                "lists",
+                "link",
+                "charmap",
+                "anchor",
+                "visualblocks",
+                "insertdatetime",
+                "wordcount",
+              ],
+              toolbar:
+                "undo redo | blocks |" +
+                "bold italic forecolor | alignleft aligncenter " +
+                "alignright alignjustify | bullist numlist outdent indent | removeformat",
+            }}
+          ></Editor>
         </div>
-        <div>
+        <div className="category">
           <label htmlFor="category">Category:</label>
           <select
             name="category"

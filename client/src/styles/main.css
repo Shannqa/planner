@@ -85,34 +85,62 @@ button:active {
 }
 
 .note-add form,
-.category-add form {
+.category-add form,
+.single-note-edit form {
   line-height: 1.5rem;
   border: 1px grey solid;
   padding: 4px;
   margin: 4px 0;
 }
 
-.note-add form div,
-.category-add form div {
-  display: flex;
-  flex-direction: column;
-}
-
 .note-add form input,
-.category-add form input {
+.category-add form input,
+.single-note-edit form input {
   padding: 4px 2px;
 }
 
-.note-add form textarea {
+.note-add form textarea,
+.single-note-edit form textarea {
   padding: 4px 2px;
   height: 10rem;
 }
 
-.note-add form select {
+.note-add form select,
+.single-note-edit form select {
   padding: 4px 2px;
 }
 
 .note-add button,
-.category-add button {
+.category-add button,
+.single-note-edit button {
   margin: 8px 8px 4px 0;
+}
+
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.notes .note {
+  width: 200px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+input.title {
+  width: 100%;
+}
+
+form .category,
+form .title {
+  display: flex;
+  flex-direction: column;
+}
+
+.note {
+  background-color: #fff;
+}
+
+.single-note {
+  background-color: #fff;
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import striptags from "striptags";
 
 function Notes() {
   const { user, token } = useContext(AppContext);
@@ -39,23 +40,26 @@ function Notes() {
   }
 
   return (
-    <div className="notes">
+    <div className="notes-all">
       <h2>All notes</h2>
-      {notes.map((note) => {
-        return (
-          <div key={note._id} className="note">
-            <h3>
-              <Link to={"/notes/" + note._id}>Title: {note.title}</Link>
-            </h3>
-            <div>Content: {note.content}</div>
-            <div>
-              <Link to={"/categories/" + note.category._id}>
-                Category: {note.category.name}
-              </Link>
+      <div className="notes">
+        {notes.map((note) => {
+          return (
+            <div key={note._id} className="note">
+              <h3>
+                <Link to={"/notes/" + note._id}>Title: {note.title}</Link>
+              </h3>
+              <p>Content:</p>
+              <div className="content">{striptags(note.content)}</div>
+              <div>
+                <Link to={"/categories/" + note.category._id}>
+                  Category: {note.category.name}
+                </Link>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }

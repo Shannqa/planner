@@ -25,8 +25,7 @@ const notes_post = [
     .escape(),
   body("content", "The content must be at least 1 character long.")
     .trim()
-    .isLength({ min: 1 })
-    .escape(),
+    .isLength({ min: 1 }),
   body("category").escape(),
   async (req, res) => {
     console.log(req.body);
@@ -111,8 +110,7 @@ const notes_id_put = [
     .escape(),
   body("content", "The content must be at least 1 character long.")
     .trim()
-    .isLength({ min: 1 })
-    .escape(),
+    .isLength({ min: 1 }),
   body("category").escape(),
   async (req, res) => {
     try {

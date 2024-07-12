@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { Editor } from "@tinymce/tinymce-react";
+import parse from "html-react-parser";
+import TINY from "./apiKey.js";
 
 function Note() {
   const { user, token, categories } = useContext(AppContext);
@@ -13,6 +16,7 @@ function Note() {
   const [parentCategory, setParentCategory] = useState("");
   const id = useParams().id;
   const navigate = useNavigate();
+  const editorRef = useRef(null);
 
   useEffect(() => {
     fetch(`/api/notes/${id}`, {
@@ -66,7 +70,7 @@ function Note() {
 
   function handleEditNote(e) {
     e.preventDefault();
-    console.log(title, content, category);
+    let tinyContent = editorRef.current.getContent();
 
     fetch(`/api/notes/${id}`, {
       method: "PUT",
@@ -77,8 +81,8 @@ function Note() {
       },
       body: JSON.stringify({
         title: title,
-        content: content,
-        category: category,
+        content: tinyContent,
+        category: category._id,
       }),
     })
       .then((res) => res.json())
@@ -118,19 +122,39 @@ function Note() {
             <label htmlFor="title">Title:</label>
             <input
               name="title"
+              className="title"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
             />
           </div>
           <div>
             <label htmlFor="content">Content:</label>
-            <textarea
-              name="content"
-              onChange={(e) => setContent(e.target.value)}
-              value={content}
-            />
+            <Editor
+              apiKey={TINY}
+              onInit={(e, editor) => (editorRef.current = editor)}
+              initialValue={note.content}
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  "advlist",
+                  "autolink",
+                  "lists",
+                  "link",
+                  "charmap",
+                  "anchor",
+                  "visualblocks",
+                  "insertdatetime",
+                  "wordcount",
+                ],
+                toolbar:
+                  "undo redo | blocks |" +
+                  "bold italic forecolor | alignleft aligncenter " +
+                  "alignright alignjustify | bullist numlist outdent indent | removeformat",
+              }}
+            ></Editor>
           </div>
-          <div>
+          <div className="category">
             <label htmlFor="category">Category:</label>
             <select
               name="category"
@@ -162,7 +186,8 @@ function Note() {
     return (
       <div className="single-note">
         <h2>Title: {note.title}</h2>
-        <p>Content: {note.content}</p>
+        <p>Content:</p>
+        <div className="content">{parse(note.content)}</div>
         <p>
           <Link to={"/categories/" + note.category._id}>
             Category: {note.category.name}

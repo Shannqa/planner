@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import striptags from "striptags";
 
 function Category() {
   const { user, token, categories } = useContext(AppContext);
@@ -38,7 +39,7 @@ function Category() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   function handleDeleteCategory() {
     fetch(`/api/categories/${id}`, {
@@ -107,33 +108,35 @@ function Category() {
   }
 
   return (
-    <div className="main">
+    <div className="category">
       <h2>{currentCategory && "Category: " + currentCategory.name}</h2>
       <div>
         <button onClick={(e) => handleAddNote(e)}>Add note</button>
         <button onClick={(e) => handleSelect(e)}>Select note(s)</button>
       </div>
-      <div>
-        {notes &&
+      <div className="notes">
+        {notes && notes.length > 0 ? (
           notes.map((note) => {
             return (
               <div key={note._id} className="note">
                 <h3>
                   <Link to={"/notes/" + note._id}>Title: {note.title}</Link>
                 </h3>
-                <div>Content: {note.content}</div>
+                <div>Content: {striptags(note.content)}</div>
                 <div>
-                  {" "}
                   <Link to={"/categories/" + note.category._id}>
                     Category: {note.category.name}
                   </Link>
                 </div>
               </div>
             );
-          })}
+          })
+        ) : (
+          <div>No notes in this category.</div>
+        )}
       </div>
       <div>
-        <p>Category settings</p>
+        <h2>Category settings</h2>
         <button onClick={(e) => handleDeleteCategory()}>Delete category</button>
         <button onClick={(e) => startEditing()}>Rename category</button>
       </div>
