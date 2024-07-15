@@ -4,14 +4,49 @@ import { body, validationResult } from "express-validator";
 // get all notes
 const notes_get = async (req, res) => {
   try {
-    const notes = await Note.find({ user: req.user._id })
+    const notes = await Note.find({ user: req.user._id, status: "active" })
       .populate("category", ["name"])
       .exec();
     console.log(req.user);
-    if (!notes) {
+    if (!notes || notes.length < 1) {
       res.status(204).json({ msg: "No notes found" });
+    } else {
+      res.status(200).json(notes);
     }
-    res.status(200).json(notes);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+// get archived notes
+const notes_get_archived = async (req, res) => {
+  try {
+    const notes = await Note.find({ user: req.user._id, status: "archived" })
+      .populate("category", ["name"])
+      .exec();
+    console.log(req.user);
+    if (!notes || notes.length < 1) {
+      res.status(204).json({ msg: "No notes found" });
+    } else {
+      res.status(200).json(notes);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+// get deleted notes
+const notes_get_deleted = async (req, res) => {
+  try {
+    const notes = await Note.find({ user: req.user._id, status: "deleted" })
+      .populate("category", ["name"])
+      .exec();
+    console.log(notes);
+    if (!notes || notes.length < 1) {
+      res.status(204).json({ msg: "No notes found" });
+    } else {
+      res.status(200).json(notes);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -30,7 +65,7 @@ const notes_post = [
   async (req, res) => {
     console.log(req.body);
     try {
-      let body = { user: req.user._id, ...req.body };
+      let body = { user: req.user._id, status: "active", ...req.body };
       const note = new Note(body);
       await note.save();
 
@@ -151,6 +186,30 @@ const notes_id_delete = async (req, res) => {
   }
 };
 
+// change note's status
+
+const notes_id_patch = async (req, res) => {
+  try {
+    let body = { ...req.body };
+    const note = await Note.findByIdAndUpdate(req.params.id, body)
+      .populate("category", ["name"])
+      .exec();
+    console.log("note", note);
+    const updatedNote = await Note.findById(req.params.id).populate(
+      "category",
+      ["name"]
+    );
+    console.log("updated", updatedNote);
+    if (!note) {
+      res.status(204).json({ msg: "No note with this id" });
+    } else {
+      res.status(200).json({ success: true, note: updatedNote });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 export {
   notes_id_get,
   notes_post,
@@ -159,4 +218,7 @@ export {
   notes_get,
   notes_id_put,
   notes_id_delete,
+  notes_get_archived,
+  notes_get_deleted,
+  notes_id_patch,
 };

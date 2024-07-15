@@ -10,6 +10,8 @@ import Account from "./Account.jsx";
 import Note from "./Note.jsx";
 import Notes from "./Notes.jsx";
 import NoteAdd from "./NoteAdd.jsx";
+import NotesArchived from "./NotesArchived.jsx";
+import NotesDeleted from "./NotesDeleted.jsx";
 import Categories from "./Categories.jsx";
 import CategoryAdd from "./CategoryAdd.jsx";
 import Category from "./Category.jsx";
@@ -40,6 +42,14 @@ function Router() {
         {
           path: "/notes/add",
           element: <NoteAdd />,
+        },
+        {
+          path: "/notes/deleted",
+          element: <NotesDeleted />,
+        },
+        {
+          path: "/notes/archived",
+          element: <NotesArchived />,
         },
         {
           path: "/notes/:id",

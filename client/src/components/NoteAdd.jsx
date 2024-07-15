@@ -98,7 +98,7 @@ function NoteAdd() {
           <label htmlFor="category">Category:</label>
           <select
             name="category"
-            value={parentCategory ? parentCategory._id : ""}
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">Choose a category</option>

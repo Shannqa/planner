@@ -3,7 +3,7 @@ import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import striptags from "striptags";
 
-function Notes() {
+function NotesArchived() {
   const { user, token } = useContext(AppContext);
   const [notes, setNotes] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ function Notes() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/api/notes/", {
+    fetch("/api/notes/archived", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -64,4 +64,4 @@ function Notes() {
     </div>
   );
 }
-export default Notes;
+export default NotesArchived;

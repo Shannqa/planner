@@ -40,14 +40,41 @@ function Note() {
       });
   }, []);
 
-  function handleDeleteNote() {
+  // change note's status
+  function handleChangeStatus(status) {
     fetch(`/api/notes/${id}`, {
-      method: "DELETE",
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: token,
       },
+      body: JSON.stringify({ status: status }),
+    })
+      .then((res) => res.json())
+      .then((body) => {
+        if (body.success) {
+          console.log(body);
+          navigate("/notes/");
+        } else {
+          // there are errors
+          console.log(body);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  // move note to trash
+  function handleDeleteNote() {
+    fetch(`/api/notes/${id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify({ status: "deleted" }),
     })
       .then((res) => res.json())
       .then((body) => {
@@ -193,9 +220,13 @@ function Note() {
             Category: {note.category.name}
           </Link>
         </p>
-
-        <button onClick={(e) => handleDeleteNote()}>Delete note</button>
         <button onClick={(e) => startEditing()}>Edit note</button>
+        <button onClick={(e) => handleChangeStatus("archived")}>
+          Archive note
+        </button>
+        <button onClick={(e) => handleChangeStatus("deleted")}>
+          Delete note
+        </button>
       </div>
     );
   }

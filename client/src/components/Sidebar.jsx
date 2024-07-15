@@ -39,6 +39,12 @@ function Sidebar() {
         <li>
           <Link to={"/notes/"}>All notes</Link>
         </li>
+        <li>
+          <Link to={"/notes/deleted/"}>Deleted</Link>
+        </li>
+        <li>
+          <Link to={"/notes/archived/"}>Archived</Link>
+        </li>
         {categories.map((category) => {
           return (
             <li key={category._id}>
