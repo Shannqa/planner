@@ -1,7 +1,7 @@
 import {
   notes_get,
   notes_post,
-  notes_put,
+  notes_patch,
   notes_delete,
   notes_get_archived,
   notes_get_deleted,
@@ -22,7 +22,7 @@ router.get("/", authJWT, notes_get);
 router.post("/", authJWT, notes_post);
 
 // edit multiple notes listed in req body
-router.put("/", authJWT, notes_put);
+router.patch("/", authJWT, notes_patch);
 
 // delete multiple notes listed in req.body
 router.delete("/", authJWT, notes_delete);

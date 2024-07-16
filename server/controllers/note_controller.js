@@ -81,18 +81,51 @@ const notes_post = [
 ];
 
 // edit multiple notes listed in req body
-const notes_put = [
-  body("title", "The title must be at least 1 character long.")
+const notes_patch = [
+  body("ids", "You must select at least one note.")
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("content", "The content must be at least 1 character long.")
+  body("action", "Incorrect action.")
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("category").escape(),
   async (req, res) => {
     try {
+      const ids = req.body.ids || null;
+      
+      if (!ids || ids.length < 1) {
+        res.status(500).json({msg: "No notes selected."});
+      }
+      
+      const action = req.body.action;
+      let status;
+      
+      if (action === "delete") {
+        status = "deleted";
+      } else if (action === "archive") {
+        status = "archived";
+      } else if (action === "activate") {
+        status = active;
+      } else {
+        res.status(500).json({msg: "Incorrect action"});
+      }
+      
+      const updatedNotes = await Note.update(
+        {
+          _id: { $in: ids }
+        },
+        { "status": status },
+        { "multi": true }
+      ).exec();
+      console.log(updatedNotes);
+      
+      if (!updatedNotes) {
+        res.status(204).json({ msg: "No notes with this id" });
+      } else {
+        res.status(200).json({ notes: updatedNotes })
+      }
+      /*
       let body = { ...req.body, user: req.user };
       const note = await Note.findByIdAndUpdate(req.params.id, body).exec();
       const updatedNote = await Note.findById(req.params.id);
@@ -102,6 +135,7 @@ const notes_put = [
       } else {
         res.status(200).json({ success: true, todo: updatedNote });
       }
+      */
     } catch (err) {
       res.status(500).json(err);
     }
@@ -213,7 +247,7 @@ const notes_id_patch = async (req, res) => {
 export {
   notes_id_get,
   notes_post,
-  notes_put,
+  notes_patch,
   notes_delete,
   notes_get,
   notes_id_put,
