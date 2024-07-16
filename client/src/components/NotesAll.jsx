@@ -1,13 +1,13 @@
 import React from "react";
 import Notes from "./Notes.jsx";
 
-function NotesArchived() {
+function NotesAll() {
   return (
     <div className="notes-all">
-      <h2>Deleted notes</h2>
-      <Notes view={"archived"} />
+      <h2>All notes</h2>
+      <Notes view={"active"} />
     </div>
   );
 }
 
-export default NotesArchived;
+export default NotesAll;

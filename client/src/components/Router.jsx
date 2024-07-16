@@ -8,7 +8,7 @@ import Signup from "./Signup.jsx";
 import Home from "./Home.jsx";
 import Account from "./Account.jsx";
 import Note from "./Note.jsx";
-import Notes from "./Notes.jsx";
+import NotesAll from "./NotesAll.jsx";
 import NoteAdd from "./NoteAdd.jsx";
 import NotesArchived from "./NotesArchived.jsx";
 import NotesDeleted from "./NotesDeleted.jsx";
@@ -37,7 +37,7 @@ function Router() {
         },
         {
           path: "/notes",
-          element: <Notes />,
+          element: <NotesAll />,
         },
         {
           path: "/notes/add",

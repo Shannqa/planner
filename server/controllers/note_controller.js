@@ -86,70 +86,70 @@ const notes_patch = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("action", "Incorrect action.")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
+  body("action", "Incorrect action.").trim().isLength({ min: 1 }).escape(),
   async (req, res) => {
     try {
+      console.log(req.body);
       const ids = req.body.ids || null;
-      
+
       if (!ids || ids.length < 1) {
-        res.status(500).json({msg: "No notes selected."});
+        res.status(500).json({ msg: "No notes selected." });
       }
-      
+
       const action = req.body.action;
       let status;
-      
+
       if (action === "delete") {
         status = "deleted";
       } else if (action === "archive") {
         status = "archived";
-      } else if (action === "activate") {
-        status = active;
+      } else if (action === "restore") {
+        status = "active";
       } else {
-        res.status(500).json({msg: "Incorrect action"});
+        res.status(500).json({ msg: "Incorrect action" });
       }
-      
-      const updatedNotes = await Note.update(
+
+      const notes = await Note.updateMany(
         {
-          _id: { $in: ids }
+          _id: { $in: ids },
         },
-        { "status": status },
-        { "multi": true }
+        { status: status },
+        { multi: true }
       ).exec();
-      console.log(updatedNotes);
-      
-      if (!updatedNotes) {
+      console.log("notes", notes);
+
+      if (!notes) {
         res.status(204).json({ msg: "No notes with this id" });
       } else {
-        res.status(200).json({ notes: updatedNotes })
+        res.status(200).json(ids);
       }
-      /*
-      let body = { ...req.body, user: req.user };
-      const note = await Note.findByIdAndUpdate(req.params.id, body).exec();
-      const updatedNote = await Note.findById(req.params.id);
-
-      if (!note) {
-        res.status(204).json({ msg: "No note with this id" });
-      } else {
-        res.status(200).json({ success: true, todo: updatedNote });
-      }
-      */
     } catch (err) {
       res.status(500).json(err);
     }
   },
 ];
 
-// delete multiple notes listed in req.body
+// permanently delete multiple notes listed in req.body
 const notes_delete = async (req, res) => {
   try {
-    const note = await Note.findByIdAndDelete(req.params.id).exec();
-    if (!note) {
-      res.status(204).json({ msg: "No note with this id" });
+    console.log(req.body);
+    const ids = req.body.ids || null;
+
+    if (!ids || ids.length < 1) {
+      res.status(500).json({ msg: "No notes selected." });
+    } else if (req.body.action !== "deletePerm") {
+      res.status(500).json({ msg: "Invalid action." });
+    }
+
+    const notes = await Note.deleteMany({
+      _id: { $in: ids },
+    }).exec();
+    console.log("notes", notes);
+
+    if (!notes) {
+      res.status(204).json({ msg: "No notes with this id" });
     } else {
-      res.status(200).json({ success: true });
+      res.status(200).json(ids);
     }
   } catch (err) {
     res.status(500).json(err);
@@ -205,8 +205,7 @@ const notes_id_put = [
   },
 ];
 
-// delete a single note
-
+// permanently delete a single note
 const notes_id_delete = async (req, res) => {
   try {
     const note = await Note.findByIdAndDelete(req.params.id).exec();
@@ -221,7 +220,6 @@ const notes_id_delete = async (req, res) => {
 };
 
 // change note's status
-
 const notes_id_patch = async (req, res) => {
   try {
     let body = { ...req.body };

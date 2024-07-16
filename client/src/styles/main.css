@@ -158,3 +158,16 @@ form .title {
   padding: 0 4px;
   font-size: 0.9rem;
 }
+
+.note {
+  position: relative;
+}
+
+input[type="checkbox"] {
+  height: 1rem;
+  width: 1rem;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  cursor: pointer;
+}
