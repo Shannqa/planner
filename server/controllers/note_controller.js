@@ -93,7 +93,7 @@ const notes_patch = [
       const ids = req.body.ids || null;
 
       if (!ids || ids.length < 1) {
-        res.status(500).json({ msg: "No notes selected." });
+        return res.status(500).json({ msg: "No notes selected." });
       }
 
       const action = req.body.action;
@@ -106,7 +106,7 @@ const notes_patch = [
       } else if (action === "restore") {
         status = "active";
       } else {
-        res.status(500).json({ msg: "Incorrect action" });
+        return res.status(500).json({ msg: "Incorrect action" });
       }
 
       const notes = await Note.updateMany(

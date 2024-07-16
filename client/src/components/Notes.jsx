@@ -45,6 +45,10 @@ function Notes({ view }) {
       });
   }, []);
 
+  function handleAddNote() {
+    navigate("/notes/add");
+  }
+
   function startSelecting() {
     if (selecting) {
       setSelecting(false);
@@ -111,7 +115,9 @@ function Notes({ view }) {
   return (
     <>
       <div>
-        <button onClick={(e) => handleAddNote(e)}>Add note</button>
+        {view === "active" && (
+          <button onClick={() => handleAddNote()}>Add note</button>
+        )}
         <button onClick={() => startSelecting()}>Select notes</button>
         {selecting && (
           <NotesActionButtons view={view} handler={handleSelectedNotes} />

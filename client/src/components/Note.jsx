@@ -68,7 +68,7 @@ function Note() {
   // move note to trash
   function handleDeleteNote() {
     fetch(`/api/notes/${id}`, {
-      method: "PATCH",
+      method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

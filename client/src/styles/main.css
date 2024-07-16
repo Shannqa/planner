@@ -132,6 +132,7 @@ button:active {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 240px 1 0;
 }
 
 input.title {
