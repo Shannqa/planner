@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import striptags from "striptags";
+import AddNote from "./AddNote.jsx";
 
 function Category() {
   const { user, token, categories } = useContext(AppContext);
@@ -148,6 +149,7 @@ function Category() {
           <button type="submit">Change name</button>
         </form>
       ) : null}
+      <AddNote />
     </div>
   );
 }

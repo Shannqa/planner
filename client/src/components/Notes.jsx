@@ -126,22 +126,21 @@ function Notes({ view }) {
       <div className="notes">
         {notes.map((note) => {
           return (
-            <div key={note._id} className="note">
-              {selecting && (
-                <input type="checkbox" onClick={() => selectNotes(note._id)} />
-              )}
-              <div>
-                <h3>
-                  <Link to={"/notes/" + note._id}>Title: {note.title}</Link>
-                </h3>
-                <div className="content">{striptags(note.content)}</div>
+            <Link to={"/notes/" + note._id} className="note-link">
+              <div key={note._id} className="note">
+                {selecting && (
+                  <input
+                    type="checkbox"
+                    onClick={() => selectNotes(note._id)}
+                  />
+                )}
+                <div>
+                  <h3 className="title">{note.title}</h3>
+                  <div className="content">{striptags(note.content)}</div>
+                </div>
+                <div className="category">Category: {note.category.name}</div>
               </div>
-              <div className="category">
-                <Link to={"/categories/" + note.category._id}>
-                  Category: {note.category.name}
-                </Link>
-              </div>
-            </div>
+            </Link>
           );
         })}
       </div>

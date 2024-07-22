@@ -85,6 +85,9 @@ button:active {
   margin: 4px 0;
   background-color: #fff;
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .note-add form,
@@ -171,4 +174,92 @@ input[type="checkbox"] {
   right: 4px;
   top: 4px;
   cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1 {
+  display: flex;
+}
+
+h1 a {
+  color: #45337b;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.note .category {
+  background-color: #0080d42b;
+}
+
+a.note-link {
+  text-decoration: none;
+  color: black;
+}
+
+div.note:hover {
+  box-shadow: #545e98 2px 2px 2px;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+}
+
+.sidebar hr {
+  border: 1px solid rgb(0, 0, 0);
+  margin-bottom: 4px;
+}
+.sidebar ul {
+  line-height: 1.8rem;
+  list-style-type: none;
+}
+
+.sidebar ul li:before {
+  content: url("/label_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg");
+  display: inline-block;
+  vertical-align: sub;
+  margin-right: 0.5em;
+}
+
+.sidebar ul.add-note li:before {
+  content: url("/add_box_16dp_000_FILL0_wght400_GRAD0_opsz20.svg");
+  display: inline-block;
+  vertical-align: sub;
+  margin-right: 0.5em;
+}
+
+.sidebar ul li.add:before {
+  content: url("/new_label_16dp_000000_FILL0_wght400_GRAD0_opsz20.svg");
+}
+
+.sidebar li.archived:before {
+  content: url("/archive_16dp_000_FILL0_wght400_GRAD0_opsz20.svg");
+}
+
+.sidebar li.deleted:before {
+  content: url("/delete_16dp_000_FILL0_wght400_GRAD0_opsz20.svg");
+}
+
+.sidebar ul li.all:before {
+  content: url("/file_open_16dp_000_FILL0_wght400_GRAD0_opsz20.svg");
+}
+
+input {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 2px;
+}
+
+.add-button {
+  position: absolute;
+  background-color: #545e98;
+  right: 70px;
+  top: 80px;
+  color: white;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  font-size: 2rem;
 }

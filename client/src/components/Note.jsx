@@ -212,21 +212,26 @@ function Note() {
   } else {
     return (
       <div className="single-note">
-        <h2>Title: {note.title}</h2>
-        <p>Content:</p>
-        <div className="content">{parse(note.content)}</div>
-        <p>
-          <Link to={"/categories/" + note.category._id}>
-            Category: {note.category.name}
-          </Link>
-        </p>
-        <button onClick={(e) => startEditing()}>Edit note</button>
-        <button onClick={(e) => handleChangeStatus("archived")}>
-          Archive note
-        </button>
-        <button onClick={(e) => handleChangeStatus("deleted")}>
-          Delete note
-        </button>
+        <div>
+          <h2>{note.title}</h2>
+          <div className="content">{parse(note.content)}</div>
+        </div>
+        <div>
+          <p className="category">
+            <Link to={"/categories/" + note.category._id}>
+              Category: {note.category.name}
+            </Link>
+          </p>
+          <div className="buttons">
+            <button onClick={(e) => startEditing()}>Edit note</button>
+            <button onClick={(e) => handleChangeStatus("archived")}>
+              Archive note
+            </button>
+            <button onClick={(e) => handleChangeStatus("deleted")}>
+              Delete note
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

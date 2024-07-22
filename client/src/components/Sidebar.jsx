@@ -25,26 +25,13 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <h2>Actions</h2>
-      <ul>
+      <ul className="add-note">
         <li>
           <Link to="/notes/add">Add note</Link>
         </li>
-        <li>
-          <Link to="/categories/add">Add category</Link>
-        </li>
       </ul>
-      <h2>Categories</h2>
-      <ul>
-        <li>
-          <Link to={"/notes/"}>All notes</Link>
-        </li>
-        <li>
-          <Link to={"/notes/deleted/"}>Deleted</Link>
-        </li>
-        <li>
-          <Link to={"/notes/archived/"}>Archived</Link>
-        </li>
+      <hr></hr>
+      <ul className="categories-list">
         {categories.map((category) => {
           return (
             <li key={category._id}>
@@ -54,6 +41,21 @@ function Sidebar() {
             </li>
           );
         })}
+        <li className="add">
+          <Link to="/categories/add">Add category</Link>
+        </li>
+      </ul>
+      <hr></hr>
+      <ul>
+        <li className="all">
+          <Link to={"/notes/"}>All notes</Link>
+        </li>
+        <li className="deleted">
+          <Link to={"/notes/deleted/"}>Deleted</Link>
+        </li>
+        <li className="archived">
+          <Link to={"/notes/archived/"}>Archived</Link>
+        </li>
       </ul>
     </div>
   );
