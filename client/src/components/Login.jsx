@@ -111,7 +111,7 @@ function Login() {
       <p className={styles.error}>{passwordError}</p>
       <button type="submit">Submit</button>
       <p>
-        No account? <Link to="/signup">Sign up</Link>
+        No account? <Link to="signup">Sign up</Link>
       </p>
     </form>
   );
