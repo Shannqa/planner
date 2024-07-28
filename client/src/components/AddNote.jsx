@@ -1,5 +1,11 @@
+import { Link } from "react-router-dom";
+
 function AddNote() {
-  return <button className="add-button">+</button>;
+  return (
+    <Link to="/notes/add">
+      <button className="add-button">+</button>
+    </Link>
+  );
 }
 
 export default AddNote;

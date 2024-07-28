@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Account from "./Account.jsx";
 import Login from "./Login.jsx";
 import Sidebar from "./Sidebar.jsx";
+import AddNote from "./AddNote.jsx";
 
 function Home() {
   const { user, token, categories, setCategories } = useContext(AppContext);
@@ -28,6 +29,7 @@ function Home() {
     <div className="home">
       {/* <Sidebar /> */}
       <p>Hi, {user}!</p>
+      <AddNote />
     </div>
   );
 }

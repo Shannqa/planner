@@ -57,6 +57,11 @@ function Sidebar() {
           <Link to={"/notes/archived/"}>Archived</Link>
         </li>
       </ul>
+      <hr></hr>
+      <ul>
+        <li>Settings</li>
+        <li>Log out</li>
+      </ul>
     </div>
   );
 }

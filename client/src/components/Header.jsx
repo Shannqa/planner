@@ -9,6 +9,7 @@ function Header() {
         <img src="/note_stack_30dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" />
         <Link to="/">Planner</Link>
       </h1>
+      <img src="/header.jpg" id="header-img" />
     </div>
   );
 }

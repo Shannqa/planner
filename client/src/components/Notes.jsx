@@ -114,7 +114,7 @@ function Notes({ view }) {
 
   return (
     <>
-      <div>
+      <div className="buttons">
         {view === "active" && (
           <button onClick={() => handleAddNote()}>Add note</button>
         )}
