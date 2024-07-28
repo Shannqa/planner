@@ -46,6 +46,7 @@ const categories_id_get = async (req, res) => {
     const notes = await Note.find({
       user: req.user._id,
       category: { $in: [req.params.id] },
+      status: "active",
     })
       .populate("category", ["name"])
       .exec(); // check if [] needed or not for a single argument

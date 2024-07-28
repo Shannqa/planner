@@ -23,6 +23,8 @@ import HomeGuest from "./HomeGuest.jsx";
 import { AppContext } from "./Root.jsx";
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
+import Logout from "./Logout.jsx";
+
 function Router() {
   const router = createBrowserRouter([
     {
@@ -49,7 +51,7 @@ function Router() {
           children: [
             {
               path: "/",
-              element: <Home />,
+              element: <NotesAll />,
             },
             {
               path: "/notes",
@@ -86,6 +88,10 @@ function Router() {
             {
               path: "/account",
               element: <Account />,
+            },
+            {
+              path: "/logout",
+              element: <Logout />,
             },
           ],
         },

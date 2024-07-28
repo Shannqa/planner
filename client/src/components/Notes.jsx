@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import striptags from "striptags";
 import NotesActionButtons from "./NotesActionButtons.jsx";
 
-function Notes({ view }) {
+function Notes({ view, categoryId }) {
   const { user, token } = useContext(AppContext);
   const [notes, setNotes] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,6 +23,8 @@ function Notes({ view }) {
     fetchUrl = "/api/notes/archived";
   } else if (view === "deleted") {
     fetchUrl = "/api/notes/deleted";
+  } else if (view === "category") {
+    fetchUrl = `/api/categories/${categoryId}`;
   } else {
     fetchUrl = "/api/notes/";
   }
@@ -43,7 +45,7 @@ function Notes({ view }) {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [fetchUrl]);
 
   function handleAddNote() {
     navigate("/notes/add");
@@ -112,10 +114,14 @@ function Notes({ view }) {
     return <div>Error, no notes.</div>;
   }
 
+  if (notes.length === 0) {
+    return <div>No notes.</div>;
+  }
+
   return (
     <>
       <div className="buttons">
-        {view === "active" && (
+        {(view === "active" || view === "category") && (
           <button onClick={() => handleAddNote()}>Add note</button>
         )}
         <button onClick={() => startSelecting()}>Select notes</button>
@@ -124,16 +130,27 @@ function Notes({ view }) {
         )}
       </div>
       <div className="notes">
-        {notes.map((note) => {
-          return (
-            <Link to={"/notes/" + note._id} className="note-link">
-              <div key={note._id} className="note">
-                {selecting && (
-                  <input
-                    type="checkbox"
-                    onClick={() => selectNotes(note._id)}
-                  />
-                )}
+        {notes.map((note) =>
+          selecting ? (
+            <div key={note._id} className="note select">
+              <input
+                type="checkbox"
+                onClick={() => selectNotes(note._id)}
+                className="note-select"
+              />
+              <div>
+                <h3 className="title">{note.title}</h3>
+                <div className="content">{striptags(note.content)}</div>
+              </div>
+              <div className="category">Category: {note.category.name}</div>
+            </div>
+          ) : (
+            <Link
+              to={"/notes/" + note._id}
+              className="note-link"
+              key={note._id}
+            >
+              <div key={note._id} className="note deselect">
                 <div>
                   <h3 className="title">{note.title}</h3>
                   <div className="content">{striptags(note.content)}</div>
@@ -141,8 +158,8 @@ function Notes({ view }) {
                 <div className="category">Category: {note.category.name}</div>
               </div>
             </Link>
-          );
-        })}
+          )
+        )}
       </div>
     </>
   );

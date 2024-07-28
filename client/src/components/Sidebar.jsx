@@ -25,8 +25,11 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <ul className="add-note">
-        <li>
+      <ul>
+        <li className="home">
+          <Link to="/">Home</Link>
+        </li>
+        <li className="add-note">
           <Link to="/notes/add">Add note</Link>
         </li>
       </ul>
@@ -59,8 +62,10 @@ function Sidebar() {
       </ul>
       <hr></hr>
       <ul>
-        <li>Settings</li>
-        <li>Log out</li>
+        <li className="settings">Settings</li>
+        <li className="logout">
+          <Link to={"/logout/"}>Log out</Link>
+        </li>
       </ul>
     </div>
   );

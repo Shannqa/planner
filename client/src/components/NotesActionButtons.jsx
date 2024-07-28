@@ -6,6 +6,13 @@ function NotesActionButtons({ view, handler }) {
         <button onClick={() => handler("delete")}>Delete notes</button>
       </div>
     );
+  } else if (view === "category") {
+    return (
+      <div>
+        <button onClick={() => handler("archive")}>Archive notes</button>
+        <button onClick={() => handler("delete")}>Delete notes</button>
+      </div>
+    );
   } else if (view === "archived") {
     return (
       <div>
