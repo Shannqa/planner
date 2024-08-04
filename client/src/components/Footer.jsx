@@ -4,7 +4,7 @@ function Footer() {
   return (
     <div className="footer">
       <span>
-        Created by <a href="https://shannqa.netlify.app/">Shannqa</a>
+        Created by <a href="https://shannqa.com/">Shannqa</a>
       </span>
     </div>
   );
