@@ -4,7 +4,6 @@ import { Editor } from "@tinymce/tinymce-react";
 import Account from "./Account.jsx";
 import Login from "./Login.jsx";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import TINY from "./apiKey.js";
 
 function NoteAdd() {
   const { user, token, categories } = useContext(AppContext);
@@ -14,6 +13,7 @@ function NoteAdd() {
   const navigate = useNavigate();
   const editorRef = useRef(null);
   const parentCategory = useLocation().state;
+  const TINY = process.env.API_KEY;
 
   useEffect(() => {
     if (parentCategory) {

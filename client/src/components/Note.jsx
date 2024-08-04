@@ -3,7 +3,6 @@ import { AppContext } from "./Root.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import parse from "html-react-parser";
-import TINY from "./apiKey.js";
 
 function Note() {
   const { user, token, categories } = useContext(AppContext);
@@ -17,6 +16,7 @@ function Note() {
   const id = useParams().id;
   const navigate = useNavigate();
   const editorRef = useRef(null);
+  const TINY = process.env.API_KEY;
 
   useEffect(() => {
     fetch(`/api/notes/${id}`, {
